@@ -38,3 +38,12 @@ set(SIELO_LIBS Core Qt5::Widgets Qt5::WebEngine Qt5::Sql Qt5::WebEngineWidgets)
 add_library(StrateonPlugin MODULE ${SOURCE_FILES} ${QRC_FILES})
 
 target_link_libraries(StrateonPlugin PRIVATE ${SIELO_LIBS})
+
+##### Visual Studio Filters #####
+foreach(_source IN ITEMS ${SOURCE_FILES})
+	get_filename_component(_source_path "${_source}" PATH)
+	file(RELATIVE_PATH _source_path_rel "${CMAKE_SOURCE_DIR}" "${_source_path}")
+	string(REPLACE "/" "\\" _group_path "${_source_path_rel}")
+	source_group("${_group_path}" FILES "${_source}")
+endforeach()
+################################
