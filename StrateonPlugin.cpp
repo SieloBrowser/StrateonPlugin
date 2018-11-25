@@ -24,6 +24,8 @@
 
 #include "StrateonPlugin.hpp"
 
+#include "StrateonSideBar.hpp"
+
 #include "Application.hpp"
 
 StrateonPlugin::StrateonPlugin()
