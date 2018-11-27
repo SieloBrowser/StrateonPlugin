@@ -26,7 +26,11 @@
 
 #include "StrateonSideBar.hpp"
 
+#include "Widgets/Tab/TabWidget.hpp"
+
 #include "Application.hpp"
+
+#include "Core/MainWindow.h"
 
 StrateonPlugin::StrateonPlugin()
 {
@@ -64,4 +68,23 @@ void StrateonPlugin::unload()
 bool StrateonPlugin::testPlugin()
 {
 	return Sn::Application::currentVersion.contains("1.17");
+}
+
+void StrateonPlugin::populateWebViewMenu(QMenu* menu, Sn::WebView* view, const Sn::WebHitTestResult& result)
+{
+	if (qobject_cast<Sn::TabbedWebView*>(view)) {
+		m_webView = qobject_cast<Sn::TabbedWebView*>(view);
+
+		menu->addAction(tr("Open Strateon in New Tab"), this, &StrateonPlugin::openNewStrateonTab);
+	}
+}
+
+void StrateonPlugin::openNewStrateonTab()
+{
+	if (!m_webView)
+		return;
+
+	MainWindow* window{new MainWindow()};
+
+	m_webView->tabWidget()->addApplication(window);
 }

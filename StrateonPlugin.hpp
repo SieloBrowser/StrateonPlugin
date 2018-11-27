@@ -28,6 +28,10 @@
 
 #include "Plugins/PluginInterface.hpp"
 
+#include <QPointer>
+
+#include "Web/Tab/TabbedWebView.hpp"
+
 class StrateonSideBar;
 
 class StrateonPlugin: public QObject, Sn::PluginInterface {
@@ -44,8 +48,15 @@ public:
 	void unload();
 	bool testPlugin();
 
+	void populateWebViewMenu(QMenu* menu, Sn::WebView* view, const Sn::WebHitTestResult& result);
+
+private slots:
+	void openNewStrateonTab();
+
 private:
 	StrateonSideBar* m_sideBar{nullptr};
+
+	QPointer<Sn::TabbedWebView> m_webView{};
 
 };
 
