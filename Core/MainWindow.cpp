@@ -39,6 +39,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setWindowIcon(QIcon(":/logo/logo.png"));
+	setWindowTitle(tr("Strateon"));
+
     //qDebug("MainWindow Created");
     m_menuBar = new QMenuBar(this);
     m_statusBar = new QStatusBar(this);
