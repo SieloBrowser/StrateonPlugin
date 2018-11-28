@@ -1,4 +1,4 @@
-/***********************************************************************************
+﻿/***********************************************************************************
 ** MIT License                                                                    **
 **                                                                                **
 ** Copyright (c) 2018 Victor DENIS (victordenis01@gmail.com)                      **
@@ -22,49 +22,32 @@
 ** SOFTWARE.                                                                      **
 ***********************************************************************************/
 
-#pragma once
-#ifndef STRATEONPLUGIN_HPP
-#define STRATEONPLUGIN_HPP
-
-#include "Plugins/PluginInterface.hpp"
-
-#include <QPointer>
-
-#include "Web/Tab/TabbedWebView.hpp"
+#include "StrateonToolButton.hpp"
 
 #include "Widgets/Tab/TabWidget.hpp"
-#include "Widgets/NavigationBar.hpp"
 
-class StrateonSideBar;
-class StrateonToolButton;
+#include "Application.hpp"
 
-class StrateonPlugin: public QObject, Sn::PluginInterface {
-	Q_OBJECT
-	Q_INTERFACES(Sn::PluginInterface)
-	Q_PLUGIN_METADATA(IID "com.feldrise.Sielo.plugins.StrateonPlugin")
+#include "Core/MainWindow.h"
 
-public:
-	StrateonPlugin();
+StrateonToolButton::StrateonToolButton(Sn::TabWidget* tabWidget, QWidget* parent) :
+	Sn::ToolButton(parent),
+	m_tabWidget(tabWidget)
+{
+	setObjectName("navigation-button-view-history");
+	setToolTip(tr("View History"));
+	setIcon(QIcon(":/logo/logo.png"));
+	setToolButtonStyle(Qt::ToolButtonIconOnly);
+	//m_buttonViewHistory->setToolBarButtonLook(true);
+	setAutoRaise(true);
+	setFocusPolicy(Qt::NoFocus);
 
-	Sn::PluginProp pluginProp();
+	connect(this, &Sn::ToolButton::clicked, this, &StrateonToolButton::openStrateon);
+}
 
-	void init(InitState state, const QString& settingsPath);
-	void unload();
-	bool testPlugin();
+void StrateonToolButton::openStrateon()
+{
+	MainWindow* window{new MainWindow()};
 
-	void populateWebViewMenu(QMenu* menu, Sn::WebView* view, const Sn::WebHitTestResult& result);
-
-	QWidget* navigationBarButton(Sn::TabWidget* tabWidget);
-
-private slots:
-	void openNewStrateonTab();
-
-private:
-	StrateonSideBar* m_sideBar{nullptr};
-
-	QPointer<Sn::TabbedWebView> m_webView{};
-	QList<StrateonToolButton*> m_navigationBarButtons{};
-
-};
-
-#endif // STRATEONPLUGIN_HPP
+	m_tabWidget->addApplication(window);
+}

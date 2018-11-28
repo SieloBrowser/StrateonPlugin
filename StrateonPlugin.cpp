@@ -25,8 +25,7 @@
 #include "StrateonPlugin.hpp"
 
 #include "StrateonSideBar.hpp"
-
-#include "Widgets/Tab/TabWidget.hpp"
+#include "StrateonToolButton.hpp"
 
 #include "Application.hpp"
 
@@ -63,6 +62,10 @@ void StrateonPlugin::unload()
 {
 	Sn::Application::instance()->removeSidebar(m_sideBar);
 	delete m_sideBar;
+	m_sideBar = nullptr;
+
+	foreach(StrateonToolButton* button, m_navigationBarButtons)
+		delete button;
 }
 
 bool StrateonPlugin::testPlugin()
@@ -77,6 +80,14 @@ void StrateonPlugin::populateWebViewMenu(QMenu* menu, Sn::WebView* view, const S
 
 		menu->addAction(tr("Open Strateon in New Tab"), this, &StrateonPlugin::openNewStrateonTab);
 	}
+}
+
+QWidget* StrateonPlugin::navigationBarButton(Sn::TabWidget* tabWidget)
+{
+	StrateonToolButton* button{new StrateonToolButton(tabWidget)};
+	m_navigationBarButtons.append(button);
+
+	return button;
 }
 
 void StrateonPlugin::openNewStrateonTab()

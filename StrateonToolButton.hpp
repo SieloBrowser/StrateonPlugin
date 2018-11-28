@@ -1,4 +1,4 @@
-/***********************************************************************************
+﻿/***********************************************************************************
 ** MIT License                                                                    **
 **                                                                                **
 ** Copyright (c) 2018 Victor DENIS (victordenis01@gmail.com)                      **
@@ -23,48 +23,25 @@
 ***********************************************************************************/
 
 #pragma once
-#ifndef STRATEONPLUGIN_HPP
-#define STRATEONPLUGIN_HPP
+#ifndef SIELOBROWSER_STRATEONTOOLBUTTON_HPP
+#define SIELOBROWSER_STRATEONTOOLBUTTON_HPP
 
-#include "Plugins/PluginInterface.hpp"
-
-#include <QPointer>
-
-#include "Web/Tab/TabbedWebView.hpp"
+#include "Utils/ToolButton.hpp"
 
 #include "Widgets/Tab/TabWidget.hpp"
-#include "Widgets/NavigationBar.hpp"
 
-class StrateonSideBar;
-class StrateonToolButton;
-
-class StrateonPlugin: public QObject, Sn::PluginInterface {
+class StrateonToolButton: public Sn::ToolButton {
 	Q_OBJECT
-	Q_INTERFACES(Sn::PluginInterface)
-	Q_PLUGIN_METADATA(IID "com.feldrise.Sielo.plugins.StrateonPlugin")
 
 public:
-	StrateonPlugin();
-
-	Sn::PluginProp pluginProp();
-
-	void init(InitState state, const QString& settingsPath);
-	void unload();
-	bool testPlugin();
-
-	void populateWebViewMenu(QMenu* menu, Sn::WebView* view, const Sn::WebHitTestResult& result);
-
-	QWidget* navigationBarButton(Sn::TabWidget* tabWidget);
+	StrateonToolButton(Sn::TabWidget* tabWidget, QWidget* parent = nullptr);
+	~StrateonToolButton() = default;
 
 private slots:
-	void openNewStrateonTab();
+	void openStrateon();
 
 private:
-	StrateonSideBar* m_sideBar{nullptr};
-
-	QPointer<Sn::TabbedWebView> m_webView{};
-	QList<StrateonToolButton*> m_navigationBarButtons{};
-
+	Sn::TabWidget* m_tabWidget{nullptr};
 };
 
-#endif // STRATEONPLUGIN_HPP
+#endif //SIELOBROWSER_STRATEONTOOLBUTTON_HPP
