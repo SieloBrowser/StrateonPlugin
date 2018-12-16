@@ -45,7 +45,7 @@ Sn::PluginProp StrateonPlugin::pluginProp()
 	props.desc = "A powerful text editor for Sielo";
 	props.icon = QIcon(":/logo/logo.png").pixmap(32);
 	props.version = "1.0.0";
-	props.author = "Victor DENIS <victordenis01@gmail.com>";
+	props.author = "Théo BESSEL <theobessel@fatserver.net>";
 
 	props.hasSettings = false;
 
