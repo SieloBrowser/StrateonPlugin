@@ -1,4 +1,4 @@
-#include "FileGestion.h"
+#include "filegestion.h"
 #include <QTreeView>
 #include <QTreeWidget>
 
